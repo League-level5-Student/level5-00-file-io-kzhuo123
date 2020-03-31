@@ -2,11 +2,12 @@ package _02_File_Encrypt_Decrypt;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
 public class FileEncryptor {
-	String alphabet = "abcdefghijklmnopqrstuvwxyz";
+
 	/*
 	 * Encryption is the process of encoding a message or information in such a way
 	 * that only authorized parties can access it and those who are not authorized
@@ -28,16 +29,36 @@ public class FileEncryptor {
 	 */
 
 	public static void main(String[] args) {
+		String alphabet = "abcdefghijklmnopqrstuvwxyz";
+		char[] alph = alphabet.toCharArray();
 		try {
-			FileWriter fw = new FileWriter("src/_02_File_Encryot_Decrypt/encryption.txt");
+			FileWriter fw = new FileWriter("src/_02_File_Encrypt_Decrypt/encryption.txt");
 			String m = JOptionPane.showInputDialog("Enter a message");
 			char[] arr = m.toCharArray();
 			String k = JOptionPane.showInputDialog("Enter a key");
 			String finai = " ";
+			int key = Integer.parseInt(k);
+			ArrayList<Character> alph2= new ArrayList<Character>();
+			for (int i = key; i < alph.length; i++) {
+				alph2.add(alph[i]);
+			}
+			for (int i = 0; i < key; i++) {
+				alph2.add(alph[i]);
+			}
+			System.out.println(alph2);
 			for (int i = 0; i < arr.length; i++) {
-				
-			} 
-			fw.write(m);
+				for (int j = 0; j < alph.length; j++) {
+					if (alph[j]==arr[i]) {
+						finai+=alph2.get(j);
+					}
+					else if (arr[i]==' ') {
+						finai+=" ";
+						break;
+					}
+				}
+
+			}
+			fw.write(finai);
 
 			fw.close();
 		} catch (IOException e) {
